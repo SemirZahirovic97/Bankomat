@@ -9,11 +9,38 @@
 
         public Person(string name, string personalnumber)      // Konstruktor: en metod som körs när vi skapar en ny Person.
         {                                                      
-            Name = name;                                        // Sätter klassens Name till värdet som skickades in.
-            PersonalNumber = personalnumber;                    // Sätter klassens PersonalNumber till värdet som skickades in.
+            Name = name;                                        
+            PersonalNumber = personalnumber;                    
         }                                           
 
-}                                     .
+}
+    class BankAccount                               // Definierar en klass som representerar ett bankkonto.
+    {                                               
+        private decimal balance;                    
+        public decimal Balance { get { return balance; } } 
+
+        public BankAccount(decimal initial)        // Konstruktor som skapar ett konto med ett startsaldo.
+        {                                           
+            if (initial < 0) initial = 0;          
+            balance = initial;                     // Sätter det privata saldot till startsaldot.
+        }                                           
+
+        public bool Deposit(decimal amount)      
+        {                                          
+            if (amount <= 0) return false;         // Om beloppet är 0 eller negativt avbryt och returnera false.
+            balance += amount;                     
+            return true;                           // Returnera true för att visa att insättningen lyckades.
+        }                                           
+
+        public bool Withdraw(decimal amount)       
+        {                                           
+            if (amount <= 0) return false;         
+            if (amount > balance) return false;    
+            balance -= amount;                     
+            return true;                           // Returnera true för att visa att uttaget lyckades.
+        }                                           
+    }                                               
+.
             }                                         
         }                                             .
     }                                                 
