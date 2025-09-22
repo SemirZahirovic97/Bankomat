@@ -68,7 +68,52 @@
           new Customer(new Person("Anna Andersson", "19900101-1234"), new BankAccount(1000m), "1234"), // Skapar kund 1 med namn, personnummer, konto och PIN.
           new Customer(new Person("Erik Svensson", "19850505-5678"), new BankAccount(500m), "5678"),  // Skapar kund 2.
           new Customer(new Person("Lisa Karlsson", "19951212-0001"), new BankAccount(250m), "0001")   // Skapar kund 3.
-      };                                      
+      };
+            int attempts = 0;                       // Variabel som räknar hur många PIN-försök som gjorts.
+            Customer loggedInCustomer = null;      
+
+            
+            while (attempts < 3 && loggedInCustomer == null) // Loop som körs tills användaren är inloggad eller har gjort 3 försök.
+            {                                       
+                Console.Clear();                    // Rensar konsolfönstret
+                Console.WriteLine("=== Välkommen till bankomaten ==="); 
+                Console.WriteLine();                
+                Console.Write("Ange 4-siffrig PIN: "); 
+                string inputPin = Console.ReadLine(); 
+
+                foreach (Customer c in customers)    // Startar en loop som går igenom varje kund i customers-arrayen.
+                {                                   
+                    if (c.Authenticate(inputPin))   // Anropar Authenticate på varje kund för att se om PIN matchar.
+                    {                               
+                        loggedInCustomer = c;       
+                        break;                      
+                    }                               
+                }                                  
+
+                if (loggedInCustomer == null)       
+                {                                   // Början av if-sats för fel PIN.
+                    attempts++;                    
+                    if (attempts >= 3)              
+                    {                               
+                        Console.WriteLine();        
+                        Console.WriteLine("Fel PIN. För många misslyckade försök. Avslutar."); // Meddela att programmet avslutas.
+                        return;                     
+                    }                               
+                    else                            
+                    {                               
+                        Console.WriteLine();        
+                        Console.WriteLine("Fel PIN. Försök igen."); // Skriv ett felmeddelande.
+                        Console.WriteLine("Tryck valfri tangent för att försöka igen...");
+                        Console.ReadKey();          
+                    }                               
+                }                                   
+            }                                       
+
+            
+            Console.Clear();                         
+            Console.WriteLine("Välkommen " + loggedInCustomer.Person.Name + "!"); // Välkomstmeddelande med kundens namn.
+            Console.WriteLine("Tryck valfri tangent för att gå vidare till menyn..."); 
+            Console.ReadKey();                       
 
 .
             }                                         
